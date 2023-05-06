@@ -42,19 +42,36 @@
       hover:text-at-light-green">
           Register
          </button>
+         <RouterLink class="text-sm mt-6 text-center" :to="{name:'Login'}">
+              if you already have an account <span class="text-at-light-green">Log In</span>
+        </RouterLink>
     </div>
    </form>
+   
   </div>
 </template>
 
-<script setup>
+<script setup >
 import {ref} from 'vue'
 
-     const email = ref(null)
-     const password = ref(null)
-     const confirmPassword = ref(null)
-     const errMessage = ref(null)
+       const email = ref(null)
+       const password = ref(null)
+       const confirmPassword = ref(null)
+       const errMessage = ref(null)
 
 
+// export default {
+//   setup() {
+//     const email = ref(null)
+//     const password = ref(null)
+//     const confirmPassword = ref(null)
+//     const errMessage = ref(null)
+
+//     return {email,password,confirmPassword,errMessage}
+//     }
+//   }
+  
+
+   
 
 </script>
