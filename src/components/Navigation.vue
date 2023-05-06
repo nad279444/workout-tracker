@@ -5,6 +5,12 @@
         <img  class="w-14" src="../assets/images/dumbbell-light.png"/>
         <h1 class="text-lg">Ben's Workout Tracker</h1>
       </div>
+      <ul class="flex flex-1 justify-end gap-x-10">
+        <router-link class="cursor-pointer" :to="{ name: 'Home' }">Home</router-link>
+        <router-link class="cursor-pointer" :to="{ name: '' }">Create</router-link>
+        <router-link  class="cursor-pointer" :to="{ name: '' }">Login</router-link>
+        <li class="cursor-pointer">Logout</li>
+      </ul>
     </nav>
   </header>
 </template>
