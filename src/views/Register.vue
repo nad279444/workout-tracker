@@ -1,11 +1,48 @@
+
+<script setup >
+import {ref} from 'vue'
+import  {supabase} from '../supabase/init' 
+import { useRouter } from 'vue-router';
+
+       const email = ref(null)
+       const password = ref(null)
+       const confirmPassword = ref(null)
+       const errMessage = ref(null)
+       const router = useRouter()
+
+       const  register = async() => {
+        if(password.value == confirmPassword.value) {
+            try {
+              const {error} = await supabase.auth.signUp({
+                email: email.value,
+                password: password.value
+              })
+              if (error) throw error
+               router.push({name: 'Login'})
+            } catch (error) {
+              errMessage.value = error.message
+              setTimeout(() => {
+              errMessage.value = null 
+               },5000 )
+              return;
+            }
+        }
+        errMessage.value = 'Error : Passwords do not match'
+        setTimeout(() => {
+          errMessage.value = null 
+        },5000 )
+       }
+
+</script>
+
 <template>
   <div class="max-w-screen-sm mx-auto px-4 py-10">
    <!-- Error Handling-->
-   <div class="mb-10 p-4 rounded-md bg-light-grey" v-if="errMessage">
-     <p class="text-red-500">{{ errMessage }}</p>
+   <div class="mb-10 p-4 rounded-md bg-red-500" v-if="errMessage">
+     <p class="text-white">{{ errMessage }}</p>
    </div>
    <!-- Registration Form-->
-   <form class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg">
+   <form @submit.prevent="register" class="p-8 flex flex-col bg-light-grey rounded-md shadow-lg">
     <h1 class="text-3xl text-at-light-green mb-4"> Register </h1>
 
     <div class="flex  flex-col mb-2">
@@ -50,28 +87,3 @@
    
   </div>
 </template>
-
-<script setup >
-import {ref} from 'vue'
-
-       const email = ref(null)
-       const password = ref(null)
-       const confirmPassword = ref(null)
-       const errMessage = ref(null)
-
-
-// export default {
-//   setup() {
-//     const email = ref(null)
-//     const password = ref(null)
-//     const confirmPassword = ref(null)
-//     const errMessage = ref(null)
-
-//     return {email,password,confirmPassword,errMessage}
-//     }
-//   }
-  
-
-   
-
-</script>
