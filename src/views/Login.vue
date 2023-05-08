@@ -1,18 +1,38 @@
 
 <script setup>
   import {ref} from 'vue'
+  import { supabase } from '../supabase/init'
+  import { useRouter } from 'vue-router';
 
 const email = ref(null)
 const password = ref(null)
 const errMessage = ref(null)
 
+const router = useRouter()
+
+const login = async() => {
+  try {
+    const {error} = await supabase.auth.signIn({
+      email: email.value,
+      password: password.value
+    })
+    console.log(error)
+    if (error) throw error;
+    router.push({name:"Home"})
+  } catch (error) {
+    errMessage.value = `Error:${error.message}`
+    setTimeout(() => {
+      errMessage.value= null
+    },5000)
+  }
+}
 </script>
 
 <template>
   <div class="max-w-screen-sm mx-auto px-4 py-10">
     <!-- Error Handling -->
-    <div v-if="errorMsg" class="mb-10 p-4 rounded-md bg-light-grey shadow-lg">
-      <p class="text-red-500">{{ errMessage }}</p>
+    <div v-if="errMessage" class="mb-10 p-4 rounded-md bg-red-500 shadow-lg">
+      <p class="text-white">{{ errMessage }}</p>
     </div>
 
     <!-- Login -->
