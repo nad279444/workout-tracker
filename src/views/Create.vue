@@ -40,7 +40,7 @@
             id="workout-type"
             class="p-2 text-gray-500 focus:outline-none"
             required
-            @change="workoutChange"
+            @change="changeListener"
             v-model="workoutType"
           >
             <option value="select-workout">Select Workout</option>
@@ -232,8 +232,13 @@ const addExercise = () => {
         duration: "",
         pace: ""
       })
-  
+}
 
+
+//add a change workOut listener
+const changeListener = () => {
+  exercises.value = []
+  addExercise()
 }
 
 
