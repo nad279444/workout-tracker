@@ -14,7 +14,7 @@
     <!-- Create -->
     <div class="p-8 flex items-start bg-light-grey rounded-md shadow-lg">
       <!-- Form -->
-      <form @submit.prevent="createWorkout" class="flex flex-col gap-y-5 w-full">
+      <form @submit.prevent="createExercise" class="flex flex-col gap-y-5 w-full">
         <h1 class="text-2xl text-at-light-green">Record Workout</h1>
 
         <!-- Workout Name -->
@@ -99,7 +99,7 @@
             <img
               @click="deleteExercise(item.id)"
               src="@/assets/images/trash-light-green.png"
-              class="h-4 w-auto absolute -left-5 cursor-pointer"
+              class="h-4 w-auto absolute -left-5 cursor-pointer "
               alt=""
             />
           </div>
@@ -203,7 +203,7 @@
 <script setup>
 import { uid } from 'uid';
 import {ref} from  'vue'
-
+import {supabase} from '../supabase/init'
 
 // Create Data
 
@@ -239,6 +239,46 @@ const addExercise = () => {
 const changeListener = () => {
   exercises.value = []
   addExercise()
+}
+
+// delete workout
+const deleteExercise = (id) => {
+  if (exercises.value.length > 2 ){
+    exercises.value = exercises.value.filter(exercise => exercise.id !== id  )
+     return
+  }
+  errorMsg.value = "Error : Need to have at least one exercise"
+  setTimeout(() => {
+    errorMsg.value = false
+  },5000)
+} 
+
+const createExercise = async() => {
+  try {
+    const {error} = await supabase.from('workouts').insert([{
+      workoutName: workoutName.value,
+      workoutType: workoutType.value,
+      exercises: exercises.value
+    }])
+    if (error) throw error
+    statusMsg.value = "Success : Workout was created"
+
+    //set state bsck ot its original
+    workoutName.value = null,
+    workoutType.value = "select-workout"
+    exercises.value = []
+
+    setTimeout(() => {
+      statusMsg.value = false
+    },5000)
+
+  } catch (error) {
+    errorMsg.value = `Error : ${error.message}`
+    setTimeout(() => {
+      errorMsg.value = false
+    },5000)
+    
+  }
 }
 
 
