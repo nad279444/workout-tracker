@@ -45,7 +45,7 @@ const getData = async () => {
     >
       <router-link
         class="flex flex-col items-center bg-light-grey p-8 shadow-md cursor-pointer"
-        :to="{ name: ''}"
+        :to="{name: 'ViewWorkout',params: {workoutId : workout.id}}"
         v-for="(workout, index) in data"
         :key="index"
       >
