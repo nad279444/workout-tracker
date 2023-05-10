@@ -255,7 +255,7 @@ const deleteExercise = (id) => {
 
 const createExercise = async() => {
   try {
-    const {error} = await supabase.from('workouts').insert([{
+    const {error} = await supabase.from('Exercise').insert([{
       workoutName: workoutName.value,
       workoutType: workoutType.value,
       exercises: exercises.value
@@ -265,7 +265,7 @@ const createExercise = async() => {
 
     //set state bsck ot its original
     workoutName.value = null,
-    workoutType.value = "select-workout"
+    workoutType.value = "select-workout",
     exercises.value = []
 
     setTimeout(() => {
