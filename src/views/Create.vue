@@ -255,7 +255,7 @@ const deleteExercise = (id) => {
 
 const createExercise = async() => {
   try {
-    const {error} = await supabase.from('Exercise').insert([{
+    const {error} = await supabase.from('exercise').insert([{
       workoutName: workoutName.value,
       workoutType: workoutType.value,
       exercises: exercises.value
