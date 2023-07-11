@@ -39,7 +39,7 @@ const getData = async () => {
 
 getData();
 
-//Delete Workut
+//Delete Workout
 const deleteWorkout = async () => {
       try {
         const { error } = await supabase
